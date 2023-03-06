@@ -1,12 +1,23 @@
 function verificar() {
-    var input = document.getElementById("input").value;
-    var result = aceita(input) ? "Aceita" : "Recusada";
-    var resultElement = document.getElementById("result");
-    resultElement.innerHTML = result;
-    if (aceita(input)) {
-        resultElement.classList.add("aceita");
+    let input = document.getElementById("input").value;
+    let regex = /^(a|b)+cc(a|b|c)*$/;
+
+    if (regex.test(input)) {
+        let resultado = "Cadeia " + input + " aceita";
+        document.getElementById("result").textContent = resultado;
+        document.getElementById("result").classList.add("aceita");
     } else {
-        resultElement.classList.remove("aceita");
+        let motivo = "";
+        if (input.length < 4) {
+            motivo = "A cadeia deve ter pelo menos 4 caracteres";
+        } else if (!input.endsWith("cc")) {
+            motivo = "A cadeia deve terminar com cc";
+        } else if (!/^[abcc]*$/.test(input.slice(0, -2))) {
+            motivo = "A cadeia antes de cc deve ser composta apenas por a, b ou c";
+        }
+        let resultado = "Cadeia recusada: " + motivo;
+        document.getElementById("result").textContent = resultado;
+        document.getElementById("result").classList.remove("aceita");
     }
 }
 
